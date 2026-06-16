@@ -7,16 +7,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f5f3;
-      color: #1a1a1a;
-      min-height: 100vh;
-      padding: 1.5rem;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; padding: 1.5rem; }
     .dashboard { max-width: 900px; margin: 0 auto; }
 
-    /* 헤더 */
     .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
     .header-left { display: flex; align-items: center; gap: 10px; }
     .header-title { font-size: 20px; font-weight: 600; }
@@ -27,7 +20,6 @@
     .av-heeyoung { background: #d1fae5; color: #065f46; }
     .av-hajin    { background: #ffedd5; color: #9a3412; }
 
-    /* 태그/점 색상 */
     .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
     .tag-sungsoo  { background: #dbeafe; color: #1d4ed8; }
     .tag-heeyoung { background: #d1fae5; color: #047857; }
@@ -39,14 +31,12 @@
     .dot-hajin    { background: #f97316; }
     .dot-family   { background: #8b5cf6; }
 
-    /* 상단 지표 */
     .grid-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
     .metric-card { background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid #e5e5e5; }
     .metric-label { font-size: 12px; color: #888; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
     .metric-value { font-size: 24px; font-weight: 600; }
     .metric-sub { font-size: 12px; color: #aaa; margin-top: 3px; }
 
-    /* 메인 그리드 */
     .grid-main { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 1rem 1.25rem; }
     .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -58,39 +48,56 @@
     .input-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
     .input-form input, .input-form select {
       flex: 1; min-width: 80px; padding: 7px 10px; border: 1px solid #ddd;
-      border-radius: 8px; font-size: 13px; background: #fff;
-      font-family: inherit; outline: none;
+      border-radius: 8px; font-size: 13px; background: #fff; font-family: inherit; outline: none;
     }
     .input-form input:focus, .input-form select:focus { border-color: #3b82f6; }
-    .btn-submit {
-      padding: 7px 14px; background: #1a1a1a; color: #fff;
-      border: none; border-radius: 8px; font-size: 13px;
-      cursor: pointer; font-family: inherit; white-space: nowrap;
-    }
-    .btn-submit:hover { background: #333; }
-    .btn-cancel {
-      padding: 7px 10px; background: none; color: #888;
-      border: 1px solid #ddd; border-radius: 8px; font-size: 13px;
-      cursor: pointer; font-family: inherit;
-    }
 
-    /* 일정 */
+    /* 반복 설정 박스 */
+    .repeat-box { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; }
+    .repeat-box label { font-size: 12px; color: #555; display: flex; align-items: center; gap: 6px; cursor: pointer; margin-bottom: 8px; font-weight: 500; }
+    .repeat-options { display: none; }
+    .repeat-options.show { display: block; }
+    .repeat-type-row { display: flex; gap: 6px; margin-bottom: 8px; }
+    .rtype-btn {
+      flex: 1; padding: 6px; border: 1px solid #ddd; border-radius: 7px;
+      background: #fff; font-size: 12px; cursor: pointer; text-align: center;
+      transition: all 0.15s; font-family: inherit; color: #555;
+    }
+    .rtype-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .weekday-row { display: flex; gap: 4px; margin-bottom: 8px; }
+    .wd-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: 1px solid #ddd;
+      background: #fff; font-size: 12px; cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    .wd-btn.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+    .period-row { display: flex; gap: 6px; align-items: center; }
+    .period-row label { font-size: 12px; color: #888; white-space: nowrap; }
+    .repeat-preview { font-size: 11px; color: #3b82f6; margin-top: 6px; min-height: 16px; }
+
+    .btn-submit { padding: 7px 14px; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .btn-submit:hover { background: #333; }
+    .btn-cancel { padding: 7px 10px; background: none; color: #888; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; cursor: pointer; font-family: inherit; }
+
+    /* 일정 목록 */
     .cal-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
     .cal-item:last-child { border-bottom: none; }
     .cal-info { flex: 1; }
     .cal-name { font-size: 13px; }
     .cal-time { font-size: 12px; color: #888; }
+    .repeat-badge { font-size: 10px; background: #eff6ff; color: #3b82f6; border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
     .btn-del { background: none; border: none; color: #ddd; cursor: pointer; font-size: 15px; padding: 0 2px; line-height: 1; }
     .btn-del:hover { color: #f87171; }
+
+    /* 월별 보기 */
+    .month-filter { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+    .mf-btn { padding: 4px 10px; border: 1px solid #ddd; border-radius: 20px; background: #fff; font-size: 12px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .mf-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
     /* 할 일 */
     .todo-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
     .todo-item:last-child { border-bottom: none; }
-    .todo-check {
-      width: 18px; height: 18px; border: 1.5px solid #ccc;
-      border-radius: 5px; cursor: pointer; display: flex;
-      align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s;
-    }
+    .todo-check { width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
     .todo-check.done { background: #10b981; border-color: #10b981; }
     .todo-check.done::after { content: '✓'; color: #fff; font-size: 11px; }
     .todo-text { font-size: 13px; flex: 1; }
@@ -109,23 +116,16 @@
     .budget-bar-bg { height: 6px; background: #f0f0f0; border-radius: 3px; }
     .budget-bar-fill { height: 6px; border-radius: 3px; background: #10b981; transition: width 0.4s; }
 
-    /* 추가 버튼 */
-    .add-btn {
-      display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888;
-      background: none; border: 1px dashed #ddd; border-radius: 8px;
-      padding: 7px 10px; cursor: pointer; width: 100%; justify-content: center;
-      margin-top: 10px; transition: all 0.15s;
-    }
+    .add-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; background: none; border: 1px dashed #ddd; border-radius: 8px; padding: 7px 10px; cursor: pointer; width: 100%; justify-content: center; margin-top: 10px; transition: all 0.15s; }
     .add-btn:hover { background: #f5f5f5; color: #444; border-color: #aaa; }
-
-    /* 빈 상태 */
     .empty { text-align: center; color: #bbb; font-size: 13px; padding: 16px 0; }
 
-    /* 모바일 */
     @media (max-width: 600px) {
       body { padding: 1rem; }
       .grid-top { grid-template-columns: repeat(2, 1fr); }
       .grid-main { grid-template-columns: 1fr; }
+      .weekday-row { gap: 3px; }
+      .wd-btn { width: 28px; height: 28px; font-size: 11px; }
     }
   </style>
 </head>
@@ -151,7 +151,7 @@
   <!-- 상단 지표 -->
   <div class="grid-top">
     <div class="metric-card">
-      <div class="metric-label"><i class="ti ti-calendar-check" style="font-size:14px;"></i> 이번 주 일정</div>
+      <div class="metric-label"><i class="ti ti-calendar-check" style="font-size:14px;"></i> 이번 달 일정</div>
       <div class="metric-value" id="stat-cal">0</div>
       <div class="metric-sub">개 등록됨</div>
     </div>
@@ -173,12 +173,16 @@
     <!-- 이번 주 일정 -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i class="ti ti-calendar" style="font-size:16px; color:#3b82f6;"></i> 이번 주 일정</div>
+        <div class="card-title"><i class="ti ti-calendar" style="font-size:16px; color:#3b82f6;"></i> 일정</div>
       </div>
-      <!-- 입력 폼 -->
+
+      <!-- 월 필터 -->
+      <div class="month-filter" id="month-filter"></div>
+
+      <!-- 일정 입력 폼 -->
       <div class="input-form" id="form-cal">
         <div class="input-row">
-          <input type="text" id="cal-name" placeholder="일정 내용" style="flex:2;" />
+          <input type="text" id="cal-name" placeholder="일정 내용 (예: 태권도 수업)" style="flex:2;" />
           <select id="cal-who">
             <option value="sungsoo">성수</option>
             <option value="heeyoung">희영</option>
@@ -190,11 +194,60 @@
           <input type="date" id="cal-date" />
           <input type="time" id="cal-time" />
         </div>
+
+        <!-- 반복 설정 -->
+        <div class="repeat-box">
+          <label>
+            <input type="checkbox" id="repeat-toggle" onchange="toggleRepeat()" />
+            🔁 반복 일정으로 등록
+          </label>
+          <div class="repeat-options" id="repeat-options">
+            <!-- 반복 유형 -->
+            <div class="repeat-type-row">
+              <button class="rtype-btn active" id="rtype-weekly" onclick="setRepeatType('weekly')">매주 요일 지정</button>
+              <button class="rtype-btn" id="rtype-monthly" onclick="setRepeatType('monthly')">매월 날짜 지정</button>
+            </div>
+
+            <!-- 요일 선택 (매주) -->
+            <div id="weekday-section">
+              <div style="font-size:12px;color:#888;margin-bottom:5px;">반복할 요일 선택 (여러 개 가능)</div>
+              <div class="weekday-row">
+                <button class="wd-btn" onclick="toggleWd(0)">일</button>
+                <button class="wd-btn" onclick="toggleWd(1)">월</button>
+                <button class="wd-btn" onclick="toggleWd(2)">화</button>
+                <button class="wd-btn" onclick="toggleWd(3)">수</button>
+                <button class="wd-btn" onclick="toggleWd(4)">목</button>
+                <button class="wd-btn" onclick="toggleWd(5)">금</button>
+                <button class="wd-btn" onclick="toggleWd(6)">토</button>
+              </div>
+            </div>
+
+            <!-- 날짜 선택 (매월) -->
+            <div id="monthday-section" style="display:none;">
+              <div style="font-size:12px;color:#888;margin-bottom:5px;">매월 몇 일에 반복할까요?</div>
+              <div class="input-row">
+                <input type="number" id="monthly-day" min="1" max="31" placeholder="예: 30" style="max-width:100px;" oninput="updatePreview()" />
+                <span style="font-size:13px;color:#888;align-self:center;">일</span>
+              </div>
+            </div>
+
+            <!-- 적용 기간 -->
+            <div style="font-size:12px;color:#888;margin-bottom:5px;margin-top:4px;">적용 기간</div>
+            <div class="period-row">
+              <input type="date" id="period-start" oninput="updatePreview()" />
+              <label>~</label>
+              <input type="date" id="period-end" oninput="updatePreview()" />
+            </div>
+            <div class="repeat-preview" id="repeat-preview"></div>
+          </div>
+        </div>
+
         <div class="input-row">
           <button class="btn-cancel" onclick="closeForm('cal')">취소</button>
           <button class="btn-submit" onclick="addCal()">추가</button>
         </div>
       </div>
+
       <div id="cal-list"><div class="empty">등록된 일정이 없어요</div></div>
       <button class="add-btn" onclick="openForm('cal')">
         <i class="ti ti-plus" style="font-size:13px;"></i> 일정 추가
@@ -206,7 +259,6 @@
       <div class="card-header">
         <div class="card-title"><i class="ti ti-list-check" style="font-size:16px; color:#10b981;"></i> 할 일 목록</div>
       </div>
-      <!-- 입력 폼 -->
       <div class="input-form" id="form-todo">
         <div class="input-row">
           <input type="text" id="todo-name" placeholder="할 일 내용" style="flex:2;" />
@@ -233,7 +285,6 @@
       <div class="card-header">
         <div class="card-title"><i class="ti ti-coin" style="font-size:16px; color:#f59e0b;"></i> 지출 내역</div>
       </div>
-      <!-- 입력 폼 -->
       <div class="input-form" id="form-expense">
         <div class="input-row">
           <input type="text" id="exp-name" placeholder="내용 (예: 마트)" style="flex:2;" />
@@ -261,27 +312,23 @@
         </div>
       </div>
       <div id="expense-list"><div class="empty">등록된 지출이 없어요</div></div>
-      <!-- 예산 바 -->
       <div class="budget-bar-wrap">
         <div class="budget-label">
           <span>이번 달 예산 500만원</span>
           <span id="budget-text">0%</span>
         </div>
-        <div class="budget-bar-bg">
-          <div class="budget-bar-fill" id="budget-bar" style="width:0%;"></div>
-        </div>
+        <div class="budget-bar-bg"><div class="budget-bar-fill" id="budget-bar" style="width:0%;"></div></div>
       </div>
       <button class="add-btn" onclick="openForm('expense')">
         <i class="ti ti-plus" style="font-size:13px;"></i> 지출 추가
       </button>
     </div>
 
-    <!-- 공지 / 메모 -->
+    <!-- 메모 -->
     <div class="card">
       <div class="card-header">
         <div class="card-title"><i class="ti ti-notes" style="font-size:16px; color:#8b5cf6;"></i> 공지 / 메모</div>
       </div>
-      <!-- 입력 폼 -->
       <div class="input-form" id="form-memo">
         <div class="input-row">
           <select id="memo-who">
@@ -308,75 +355,200 @@
 </div>
 
 <script>
-  // 오늘 날짜
   const d = new Date();
   const days = ['일','월','화','수','목','금','토'];
   document.getElementById('today-date').textContent =
     `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
 
-  // 날짜 기본값 오늘로
   const todayStr = d.toISOString().split('T')[0];
   document.getElementById('cal-date').value = todayStr;
+  document.getElementById('period-start').value = todayStr;
 
-  // 데이터 저장소 (브라우저 메모리)
+  // 기본 종료일: 6개월 후
+  const sixMonths = new Date(d);
+  sixMonths.setMonth(sixMonths.getMonth() + 6);
+  document.getElementById('period-end').value = sixMonths.toISOString().split('T')[0];
+
   let calItems = [];
   let todoItems = [];
   let expenseItems = [];
   let memoItems = [];
   const BUDGET = 5000000;
 
-  // 이름/색상 매핑
   const whoLabel = { sungsoo:'성수', heeyoung:'희영', hajin:'하진', family:'가족' };
-  const dotColor = { sungsoo:'dot-sungsoo', heeyoung:'dot-heeyoung', hajin:'dot-hajin', family:'dot-family' };
-  const tagColor = { sungsoo:'tag-sungsoo', heeyoung:'tag-heeyoung', hajin:'tag-hajin', family:'tag-family' };
+  const dotColor  = { sungsoo:'dot-sungsoo', heeyoung:'dot-heeyoung', hajin:'dot-hajin', family:'dot-family' };
+  const tagColor  = { sungsoo:'tag-sungsoo', heeyoung:'tag-heeyoung', hajin:'tag-hajin', family:'tag-family' };
   const memoColor = { sungsoo:'#3b82f6', heeyoung:'#10b981', hajin:'#f97316' };
+  const iconBg    = { '🛒':'#fef3c7','🍽️':'#ffedd5','🎓':'#d1fae5','🏥':'#fee2e2','🚗':'#e0f2fe','🎁':'#f3e8ff' };
 
-  // 폼 열기/닫기
-  function openForm(type) {
-    document.getElementById('form-' + type).classList.add('open');
+  // 현재 보는 달 필터 (null = 전체)
+  let viewMonth = null;
+
+  // ── 반복 관련 상태 ──
+  let repeatType = 'weekly';   // 'weekly' | 'monthly'
+  let selectedWd = new Set();  // 요일 인덱스 0~6
+
+  function toggleRepeat() {
+    const on = document.getElementById('repeat-toggle').checked;
+    document.getElementById('repeat-options').classList.toggle('show', on);
+    updatePreview();
   }
+
+  function setRepeatType(type) {
+    repeatType = type;
+    document.getElementById('rtype-weekly').classList.toggle('active', type === 'weekly');
+    document.getElementById('rtype-monthly').classList.toggle('active', type === 'monthly');
+    document.getElementById('weekday-section').style.display  = type === 'weekly'  ? '' : 'none';
+    document.getElementById('monthday-section').style.display = type === 'monthly' ? '' : 'none';
+    updatePreview();
+  }
+
+  function toggleWd(idx) {
+    const btns = document.querySelectorAll('.wd-btn');
+    if (selectedWd.has(idx)) { selectedWd.delete(idx); btns[idx].classList.remove('active'); }
+    else                      { selectedWd.add(idx);    btns[idx].classList.add('active'); }
+    updatePreview();
+  }
+
+  function updatePreview() {
+    const dates = buildRepeatDates();
+    const el = document.getElementById('repeat-preview');
+    if (!dates.length) { el.textContent = ''; return; }
+    el.textContent = `→ 총 ${dates.length}개 일정 생성 (첫날: ${dates[0]}, 마지막: ${dates[dates.length-1]})`;
+  }
+
+  // 반복 날짜 배열 생성
+  function buildRepeatDates() {
+    const start = document.getElementById('period-start').value;
+    const end   = document.getElementById('period-end').value;
+    if (!start || !end || start > end) return [];
+
+    const dates = [];
+    const cur = new Date(start + 'T00:00:00');
+    const endD = new Date(end + 'T00:00:00');
+
+    if (repeatType === 'weekly') {
+      if (!selectedWd.size) return [];
+      while (cur <= endD) {
+        if (selectedWd.has(cur.getDay())) {
+          dates.push(cur.toISOString().split('T')[0]);
+        }
+        cur.setDate(cur.getDate() + 1);
+      }
+    } else {
+      const mday = parseInt(document.getElementById('monthly-day').value);
+      if (!mday || mday < 1 || mday > 31) return [];
+      while (cur <= endD) {
+        if (cur.getDate() === mday) {
+          dates.push(cur.toISOString().split('T')[0]);
+          cur.setMonth(cur.getMonth() + 1);
+          cur.setDate(1); // 다음 달 1일로 이동해서 무한루프 방지
+        } else {
+          cur.setDate(cur.getDate() + 1);
+        }
+      }
+    }
+    return dates;
+  }
+
+  // ── 폼 열기/닫기 ──
+  function openForm(type) { document.getElementById('form-' + type).classList.add('open'); }
   function closeForm(type) {
     document.getElementById('form-' + type).classList.remove('open');
+    if (type === 'cal') {
+      document.getElementById('repeat-toggle').checked = false;
+      document.getElementById('repeat-options').classList.remove('show');
+      selectedWd.clear();
+      document.querySelectorAll('.wd-btn').forEach(b => b.classList.remove('active'));
+      setRepeatType('weekly');
+      document.getElementById('repeat-preview').textContent = '';
+    }
   }
 
-  // ── 일정 ──
+  // ── 일정 추가 ──
   function addCal() {
     const name = document.getElementById('cal-name').value.trim();
     const who  = document.getElementById('cal-who').value;
-    const date = document.getElementById('cal-date').value;
     const time = document.getElementById('cal-time').value;
+    const isRepeat = document.getElementById('repeat-toggle').checked;
+
     if (!name) { alert('일정 내용을 입력해주세요'); return; }
-    calItems.push({ id: Date.now(), name, who, date, time });
+
+    if (isRepeat) {
+      const dates = buildRepeatDates();
+      if (!dates.length) { alert('반복 날짜가 생성되지 않았어요.\n요일 또는 날짜와 기간을 확인해주세요.'); return; }
+      const groupId = Date.now();
+      dates.forEach((date, i) => {
+        calItems.push({ id: groupId + i, name, who, date, time, repeat: true, groupId });
+      });
+      alert(`반복 일정 ${dates.length}개가 등록됐어요!`);
+    } else {
+      const date = document.getElementById('cal-date').value;
+      if (!date) { alert('날짜를 선택해주세요'); return; }
+      calItems.push({ id: Date.now(), name, who, date, time, repeat: false });
+    }
+
     calItems.sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
     document.getElementById('cal-name').value = '';
-    document.getElementById('cal-time').value = '';
     closeForm('cal');
+    buildMonthFilter();
     renderCal();
     updateStats();
   }
+
+  // 월 필터 버튼 생성
+  function buildMonthFilter() {
+    const months = [...new Set(calItems.map(i => i.date.slice(0,7)))].sort();
+    const el = document.getElementById('month-filter');
+    if (!months.length) { el.innerHTML = ''; return; }
+    el.innerHTML = `<button class="mf-btn ${!viewMonth?'active':''}" onclick="setMonth(null)">전체</button>` +
+      months.map(m => {
+        const [y,mo] = m.split('-');
+        return `<button class="mf-btn ${viewMonth===m?'active':''}" onclick="setMonth('${m}')">${parseInt(mo)}월</button>`;
+      }).join('');
+  }
+
+  function setMonth(m) {
+    viewMonth = m;
+    buildMonthFilter();
+    renderCal();
+  }
+
   function renderCal() {
     const list = document.getElementById('cal-list');
-    if (!calItems.length) { list.innerHTML = '<div class="empty">등록된 일정이 없어요</div>'; return; }
-    list.innerHTML = calItems.map(item => {
-      const dateObj = item.date ? new Date(item.date + 'T00:00:00') : null;
-      const dateStr = dateObj
-        ? `${dateObj.getMonth()+1}/${dateObj.getDate()}(${days[dateObj.getDay()]})`
-        : '';
+    const filtered = viewMonth ? calItems.filter(i => i.date.startsWith(viewMonth)) : calItems;
+    if (!filtered.length) { list.innerHTML = '<div class="empty">등록된 일정이 없어요</div>'; return; }
+    list.innerHTML = filtered.map(item => {
+      const dateObj = new Date(item.date + 'T00:00:00');
+      const dateStr = `${dateObj.getMonth()+1}/${dateObj.getDate()}(${days[dateObj.getDay()]})`;
       const timeStr = item.time ? ' ' + item.time : '';
+      const badge   = item.repeat ? '<span class="repeat-badge">반복</span>' : '';
       return `<div class="cal-item">
         <div class="dot ${dotColor[item.who]}"></div>
         <div class="cal-info">
-          <div class="cal-name">${item.name}</div>
+          <div class="cal-name">${item.name}${badge}</div>
           <div class="cal-time">${dateStr}${timeStr}</div>
         </div>
         <span class="tag ${tagColor[item.who]}">${whoLabel[item.who]}</span>
-        <button class="btn-del" onclick="delCal(${item.id})">×</button>
+        <button class="btn-del" onclick="delCal(${item.id}, ${item.repeat}, ${item.groupId||0})">×</button>
       </div>`;
     }).join('');
   }
-  function delCal(id) {
-    calItems = calItems.filter(i => i.id !== id);
-    renderCal(); updateStats();
+
+  function delCal(id, isRepeat, groupId) {
+    if (isRepeat && groupId) {
+      const count = calItems.filter(i => i.groupId === groupId).length;
+      if (count > 1 && confirm(`반복 일정 ${count}개를 모두 삭제할까요?\n(취소하면 이 날짜만 삭제돼요)`)) {
+        calItems = calItems.filter(i => i.groupId !== groupId);
+      } else {
+        calItems = calItems.filter(i => i.id !== id);
+      }
+    } else {
+      calItems = calItems.filter(i => i.id !== id);
+    }
+    buildMonthFilter();
+    renderCal();
+    updateStats();
   }
 
   // ── 할 일 ──
@@ -387,25 +559,21 @@
     todoItems.push({ id: Date.now(), name, who, done: false });
     document.getElementById('todo-name').value = '';
     closeForm('todo');
-    renderTodo();
-    updateStats();
+    renderTodo(); updateStats();
   }
   function toggleTodo(id) {
     const item = todoItems.find(i => i.id === id);
     if (item) item.done = !item.done;
     renderTodo(); updateStats();
   }
-  function delTodo(id) {
-    todoItems = todoItems.filter(i => i.id !== id);
-    renderTodo(); updateStats();
-  }
+  function delTodo(id) { todoItems = todoItems.filter(i => i.id !== id); renderTodo(); updateStats(); }
   function renderTodo() {
     const list = document.getElementById('todo-list');
     if (!todoItems.length) { list.innerHTML = '<div class="empty">할 일이 없어요 🎉</div>'; return; }
     list.innerHTML = todoItems.map(item => `
       <div class="todo-item">
-        <div class="todo-check ${item.done ? 'done' : ''}" onclick="toggleTodo(${item.id})"></div>
-        <span class="todo-text ${item.done ? 'done' : ''}">${item.name}</span>
+        <div class="todo-check ${item.done?'done':''}" onclick="toggleTodo(${item.id})"></div>
+        <span class="todo-text ${item.done?'done':''}">${item.name}</span>
         <span class="tag ${tagColor[item.who]}">${whoLabel[item.who]}</span>
         <button class="btn-del" onclick="delTodo(${item.id})">×</button>
       </div>`).join('');
@@ -422,17 +590,12 @@
     document.getElementById('exp-name').value = '';
     document.getElementById('exp-amount').value = '';
     closeForm('expense');
-    renderExpense();
-    updateStats();
-  }
-  function delExpense(id) {
-    expenseItems = expenseItems.filter(i => i.id !== id);
     renderExpense(); updateStats();
   }
+  function delExpense(id) { expenseItems = expenseItems.filter(i => i.id !== id); renderExpense(); updateStats(); }
   function renderExpense() {
     const list = document.getElementById('expense-list');
     if (!expenseItems.length) { list.innerHTML = '<div class="empty">등록된 지출이 없어요</div>'; return; }
-    const iconBg = { '🛒':'#fef3c7','🍽️':'#ffedd5','🎓':'#d1fae5','🏥':'#fee2e2','🚗':'#e0f2fe','🎁':'#f3e8ff' };
     list.innerHTML = expenseItems.slice().reverse().map(item => `
       <div class="expense-item">
         <div class="expense-left">
@@ -461,10 +624,7 @@
     closeForm('memo');
     renderMemo();
   }
-  function delMemo(id) {
-    memoItems = memoItems.filter(i => i.id !== id);
-    renderMemo();
-  }
+  function delMemo(id) { memoItems = memoItems.filter(i => i.id !== id); renderMemo(); }
   function renderMemo() {
     const list = document.getElementById('memo-list');
     if (!memoItems.length) { list.innerHTML = '<div class="empty">등록된 메모가 없어요</div>'; return; }
@@ -476,15 +636,14 @@
       </div>`).join('');
   }
 
-  // ── 통계 업데이트 ──
+  // ── 통계 ──
   function updateStats() {
-    document.getElementById('stat-cal').textContent = calItems.length;
+    const curMonth = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    document.getElementById('stat-cal').textContent = calItems.filter(i => i.date.startsWith(curMonth)).length;
     const remaining = todoItems.filter(i => !i.done).length;
     document.getElementById('stat-todo').textContent = todoItems.length;
-    document.getElementById('stat-todo-sub').textContent =
-      `${remaining}개 남음 / ${todoItems.length - remaining}개 완료`;
-
-    const total = expenseItems.reduce((s, i) => s + i.amount, 0);
+    document.getElementById('stat-todo-sub').textContent = `${remaining}개 남음 / ${todoItems.length - remaining}개 완료`;
+    const total = expenseItems.reduce((s,i) => s + i.amount, 0);
     const pct = Math.min(Math.round(total / BUDGET * 100), 100);
     document.getElementById('stat-expense').textContent = total.toLocaleString() + '원';
     document.getElementById('stat-expense-sub').textContent = `예산 대비 ${pct}%`;
