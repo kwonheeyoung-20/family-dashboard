@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>우리 가족 대시보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .dashboard { max-width: 900px; margin: 0 auto; }
+
+    /* 헤더 */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .header-title { font-size: 20px; font-weight: 600; }
+    .header-date { font-size: 13px; color: #888; margin-top: 2px; }
+    .avatar-row { display: flex; gap: 6px; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; cursor: default;
+    }
+    .av-blue   { background: #dbeafe; color: #1e40af; }
+    .av-teal   { background: #d1fae5; color: #065f46; }
+    .av-coral  { background: #fee2e2; color: #991b1b; }
+    .av-purple { background: #ede9fe; color: #5b21b6; }
+
+    /* 상단 지표 카드 */
+    .grid-top {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .metric-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid #e5e5e5;
+    }
+    .metric-label {
+      font-size: 12px; color: #888;
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .metric-value { font-size: 24px; font-weight: 600; }
+    .metric-sub { font-size: 12px; color: #aaa; margin-top: 3px; }
+
+    /* 메인 그리드 */
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+    }
+    .card-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* 일정 */
+    .cal-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .cal-item:last-child { border-bottom: none; }
+    .cal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-blue   { background: #3b82f6; }
+    .dot-coral  { background: #ef4444; }
+    .dot-teal   { background: #10b981; }
+    .dot-purple { background: #8b5cf6; }
+    .cal-info { flex: 1; }
+    .cal-name { font-size: 13px; }
+    .cal-time { font-size: 12px; color: #888; }
+    .tag {
+      font-size: 11px; padding: 2px 8px;
+      border-radius: 20px; font-weight: 500;
+    }
+    .tag-blue   { background: #dbeafe; color: #1d4ed8; }
+    .tag-coral  { background: #fee2e2; color: #b91c1c; }
+    .tag-teal   { background: #d1fae5; color: #047857; }
+    .tag-purple { background: #ede9fe; color: #6d28d9; }
+
+    /* 할 일 */
+    .todo-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .todo-item:last-child { border-bottom: none; }
+    .todo-check {
+      width: 18px; height: 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 5px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.15s;
+    }
+    .todo-check.done { background: #10b981; border-color: #10b981; }
+    .todo-check.done::after { content: '✓'; color: #fff; font-size: 11px; }
+    .todo-text { font-size: 13px; flex: 1; }
+    .todo-text.done { text-decoration: line-through; color: #aaa; }
+
+    /* 지출 */
+    .expense-item {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .expense-item:last-child { border-bottom: none; }
+    .expense-left { display: flex; align-items: center; gap: 10px; }
+    .expense-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .expense-name { font-size: 13px; }
+    .expense-who { font-size: 11px; color: #888; }
+    .expense-amount { font-size: 13px; font-weight: 600; }
+    .budget-bar-wrap { margin-top: 14px; }
+    .budget-label {
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: #888; margin-bottom: 6px;
+    }
+    .budget-bar-bg { height: 6px; background: #f0f0f0; border-radius: 3px; }
+    .budget-bar-fill { height: 6px; border-radius: 3px; background: #10b981; transition: width 0.5s; }
+
+    /* 메모 */
+    .memo-item {
+      padding: 9px 11px;
+      background: #fafafa;
+      border-radius: 8px;
+      margin-bottom: 7px;
+      border-left: 3px solid #e5e5e5;
+    }
+    .memo-item:last-child { margin-bottom: 0; }
+    .memo-text { font-size: 13px; }
+    .memo-meta { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+    /* 추가 버튼 */
+    .add-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: #888;
+      background: none;
+      border: 1px dashed #ddd;
+      border-radius: 8px;
+      padding: 7px 10px; cursor: pointer;
+      width: 100%; justify-content: center;
+      margin-top: 10px;
+      transition: all 0.15s;
+    }
+    .add-btn:hover { background: #f5f5f5; color: #444; border-color: #aaa; }
+
+    /* 모바일 대응 */
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+      .grid-top { grid-template-columns: repeat(2, 1fr); }
+      .grid-main { grid-template-columns: 1fr; }
+      .avatar { font-size: 10px; width: 32px; height: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+
+    <!-- 헤더 -->
+    <div class="header">
+      <div class="header-left">
+        <i class="ti ti-smart-home" style="font-size:22px; color:#888;"></i>
+        <div>
+          <div class="header-title">우리 가족 대시보드</div>
+          <div class="header-date" id="today-date"></div>
+        </div>
+      </div>
+      <div class="avatar-row">
+        <div class="avatar av-blue">아빠</div>
+        <div class="avatar av-teal">엄마</div>
+        <div class="avatar av-coral">첫째</div>
+        <div class="avatar av-purple">둘째</div>
+      </div>
+    </div>
+
+    <!-- 상단 지표 -->
+    <div class="grid-top">
+      <div class="metric-card">
+        <div class="metric-label"><i class="ti ti-calendar-check" style="font-size:14px;"></i> 오늘 일정</div>
+        <div class="metric-value">3</div>
+        <div class="metric-sub">내일 2개 예정</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label"><i class="ti ti-checkbox" style="font-size:14px;"></i> 할 일</div>
+        <div class="metric-value">5</div>
+        <div class="metric-sub">2개 완료</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label"><i class="ti ti-wallet" style="font-size:14px;"></i> 이번 달 지출</div>
+        <div class="metric-value">68%</div>
+        <div class="metric-sub">340만 / 500만 원</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label"><i class="ti ti-notes" style="font-size:14px;"></i> 새 메모</div>
+        <div class="metric-value">2</div>
+        <div class="metric-sub">오늘 작성됨</div>
+      </div>
+    </div>
+
+    <!-- 메인 그리드 -->
+    <div class="grid-main">
+
+      <!-- 이번 주 일정 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="ti ti-calendar" style="font-size:16px; color:#3b82f6;"></i> 이번 주 일정
+          </div>
+        </div>
+        <div class="cal-item">
+          <div class="cal-dot dot-blue"></div>
+          <div class="cal-info">
+            <div class="cal-name">학부모 상담</div>
+            <div class="cal-time">오늘 오후 3시</div>
+          </div>
+          <span class="tag tag-teal">엄마</span>
+        </div>
+        <div class="cal-item">
+          <div class="cal-dot dot-coral"></div>
+          <div class="cal-info">
+            <div class="cal-name">피아노 레슨</div>
+            <div class="cal-time">오늘 오후 5시</div>
+          </div>
+          <span class="tag tag-coral">첫째</span>
+        </div>
+        <div class="cal-item">
+          <div class="cal-dot dot-teal"></div>
+          <div class="cal-info">
+            <div class="cal-name">마트 장보기</div>
+            <div class="cal-time">수요일 오전 11시</div>
+          </div>
+          <span class="tag tag-blue">아빠</span>
+        </div>
+        <div class="cal-item">
+          <div class="cal-dot dot-purple"></div>
+          <div class="cal-info">
+            <div class="cal-name">치과 예약</div>
+            <div class="cal-time">금요일 오후 2시</div>
+          </div>
+          <span class="tag tag-purple">둘째</span>
+        </div>
+        <button class="add-btn">
+          <i class="ti ti-plus" style="font-size:13px;"></i> 일정 추가 (준비 중)
+        </button>
+      </div>
+
+      <!-- 할 일 목록 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="ti ti-list-check" style="font-size:16px; color:#10b981;"></i> 할 일 목록
+          </div>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check done"></div>
+          <span class="todo-text done">청소기 돌리기</span>
+          <span class="tag tag-teal">엄마</span>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check done"></div>
+          <span class="todo-text done">우유 사오기</span>
+          <span class="tag tag-blue">아빠</span>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleTodo(this)"></div>
+          <span class="todo-text">숙제 검사하기</span>
+          <span class="tag tag-teal">엄마</span>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleTodo(this)"></div>
+          <span class="todo-text">약 처방전 받기</span>
+          <span class="tag tag-blue">아빠</span>
+        </div>
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleTodo(this)"></div>
+          <span class="todo-text">독서 30분</span>
+          <span class="tag tag-coral">첫째</span>
+        </div>
+        <button class="add-btn">
+          <i class="ti ti-plus" style="font-size:13px;"></i> 할 일 추가 (준비 중)
+        </button>
+      </div>
+
+      <!-- 최근 지출 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="ti ti-coin" style="font-size:16px; color:#f59e0b;"></i> 최근 지출
+          </div>
+        </div>
+        <div class="expense-item">
+          <div class="expense-left">
+            <div class="expense-icon" style="background:#fef3c7;">🛒</div>
+            <div>
+              <div class="expense-name">마트</div>
+              <div class="expense-who">아빠 · 오늘</div>
+            </div>
+          </div>
+          <div class="expense-amount">78,400원</div>
+        </div>
+        <div class="expense-item">
+          <div class="expense-left">
+            <div class="expense-icon" style="background:#d1fae5;">🎓</div>
+            <div>
+              <div class="expense-name">학원비</div>
+              <div class="expense-who">엄마 · 어제</div>
+            </div>
+          </div>
+          <div class="expense-amount">280,000원</div>
+        </div>
+        <div class="expense-item">
+          <div class="expense-left">
+            <div class="expense-icon" style="background:#ede9fe;">🍽️</div>
+            <div>
+              <div class="expense-name">외식</div>
+              <div class="expense-who">가족 · 일요일</div>
+            </div>
+          </div>
+          <div class="expense-amount">65,000원</div>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-label">
+            <span>이번 달 예산</span>
+            <span>340만 / 500만 원</span>
+          </div>
+          <div class="budget-bar-bg">
+            <div class="budget-bar-fill" style="width: 68%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 공지 / 메모 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="ti ti-notes" style="font-size:16px; color:#8b5cf6;"></i> 공지 / 메모
+          </div>
+        </div>
+        <div class="memo-item" style="border-left-color: #3b82f6;">
+          <div class="memo-text">🏖️ 여름 휴가 일정 — 7월 말로 논의 필요!</div>
+          <div class="memo-meta">아빠 · 오늘</div>
+        </div>
+        <div class="memo-item" style="border-left-color: #10b981;">
+          <div class="memo-text">첫째 알레르기 약 냉장고에 있어요. 아침마다 꼭 챙겨주세요.</div>
+          <div class="memo-meta">엄마 · 오늘</div>
+        </div>
+        <div class="memo-item" style="border-left-color: #8b5cf6;">
+          <div class="memo-text">이번 주 토요일 할머니댁 방문 예정</div>
+          <div class="memo-meta">엄마 · 어제</div>
+        </div>
+        <button class="add-btn">
+          <i class="ti ti-plus" style="font-size:13px;"></i> 메모 추가 (준비 중)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 오늘 날짜 표시
+    const d = new Date();
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    document.getElementById('today-date').textContent =
+      `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+
+    // 할 일 체크 토글
+    function toggleTodo(el) {
+      el.classList.toggle('done');
+      const text = el.parentElement.querySelector('.todo-text');
+      text.classList.toggle('done');
+    }
+  </script>
+</body>
+</html>
