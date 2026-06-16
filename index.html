@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #f5f5f3;
@@ -15,109 +14,82 @@
       min-height: 100vh;
       padding: 1.5rem;
     }
-
     .dashboard { max-width: 900px; margin: 0 auto; }
 
     /* 헤더 */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
     .header-left { display: flex; align-items: center; gap: 10px; }
     .header-title { font-size: 20px; font-weight: 600; }
     .header-date { font-size: 13px; color: #888; margin-top: 2px; }
     .avatar-row { display: flex; gap: 8px; }
-    .avatar {
-      width: 42px; height: 42px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; cursor: default;
-      letter-spacing: -0.3px;
-    }
-
-    /* 가족 색상 — 성수:파랑 / 희영:초록 / 하진:주황 */
+    .avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
     .av-sungsoo  { background: #dbeafe; color: #1e40af; }
     .av-heeyoung { background: #d1fae5; color: #065f46; }
     .av-hajin    { background: #ffedd5; color: #9a3412; }
 
-    .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+    /* 태그/점 색상 */
+    .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
     .tag-sungsoo  { background: #dbeafe; color: #1d4ed8; }
     .tag-heeyoung { background: #d1fae5; color: #047857; }
     .tag-hajin    { background: #ffedd5; color: #c2410c; }
-
+    .tag-family   { background: #f3e8ff; color: #7c3aed; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .dot-sungsoo  { background: #3b82f6; }
     .dot-heeyoung { background: #10b981; }
     .dot-hajin    { background: #f97316; }
+    .dot-family   { background: #8b5cf6; }
 
     /* 상단 지표 */
-    .grid-top {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .metric-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 14px 16px;
-      border: 1px solid #e5e5e5;
-    }
-    .metric-label {
-      font-size: 12px; color: #888;
-      margin-bottom: 6px;
-      display: flex; align-items: center; gap: 5px;
-    }
+    .grid-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+    .metric-card { background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid #e5e5e5; }
+    .metric-label { font-size: 12px; color: #888; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
     .metric-value { font-size: 24px; font-weight: 600; }
     .metric-sub { font-size: 12px; color: #aaa; margin-top: 3px; }
 
     /* 메인 그리드 */
-    .grid-main {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    .grid-main { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 1rem 1.25rem; }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .card-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+    /* 입력 폼 */
+    .input-form { display: none; background: #f8f8f8; border-radius: 10px; padding: 12px; margin-bottom: 10px; border: 1px solid #e5e5e5; }
+    .input-form.open { display: block; }
+    .input-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+    .input-form input, .input-form select {
+      flex: 1; min-width: 80px; padding: 7px 10px; border: 1px solid #ddd;
+      border-radius: 8px; font-size: 13px; background: #fff;
+      font-family: inherit; outline: none;
     }
-    .card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      padding: 1rem 1.25rem;
+    .input-form input:focus, .input-form select:focus { border-color: #3b82f6; }
+    .btn-submit {
+      padding: 7px 14px; background: #1a1a1a; color: #fff;
+      border: none; border-radius: 8px; font-size: 13px;
+      cursor: pointer; font-family: inherit; white-space: nowrap;
     }
-    .card-header {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .card-title {
-      font-size: 14px; font-weight: 600;
-      display: flex; align-items: center; gap: 6px;
+    .btn-submit:hover { background: #333; }
+    .btn-cancel {
+      padding: 7px 10px; background: none; color: #888;
+      border: 1px solid #ddd; border-radius: 8px; font-size: 13px;
+      cursor: pointer; font-family: inherit;
     }
 
     /* 일정 */
-    .cal-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
+    .cal-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
     .cal-item:last-child { border-bottom: none; }
-    .cal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .cal-info { flex: 1; }
     .cal-name { font-size: 13px; }
     .cal-time { font-size: 12px; color: #888; }
+    .btn-del { background: none; border: none; color: #ddd; cursor: pointer; font-size: 15px; padding: 0 2px; line-height: 1; }
+    .btn-del:hover { color: #f87171; }
 
     /* 할 일 */
-    .todo-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
+    .todo-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
     .todo-item:last-child { border-bottom: none; }
     .todo-check {
-      width: 18px; height: 18px;
-      border: 1.5px solid #ccc;
-      border-radius: 5px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: all 0.15s;
+      width: 18px; height: 18px; border: 1.5px solid #ccc;
+      border-radius: 5px; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s;
     }
     .todo-check.done { background: #10b981; border-color: #10b981; }
     .todo-check.done::after { content: '✓'; color: #fff; font-size: 11px; }
@@ -125,273 +97,401 @@
     .todo-text.done { text-decoration: line-through; color: #aaa; }
 
     /* 지출 */
-    .expense-item {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 7px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
+    .expense-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
     .expense-item:last-child { border-bottom: none; }
     .expense-left { display: flex; align-items: center; gap: 10px; }
-    .expense-icon {
-      width: 30px; height: 30px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
-    }
+    .expense-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; }
     .expense-name { font-size: 13px; }
     .expense-who { font-size: 11px; color: #888; }
     .expense-amount { font-size: 13px; font-weight: 600; }
     .budget-bar-wrap { margin-top: 14px; }
-    .budget-label {
-      display: flex; justify-content: space-between;
-      font-size: 12px; color: #888; margin-bottom: 6px;
-    }
+    .budget-label { display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-bottom: 6px; }
     .budget-bar-bg { height: 6px; background: #f0f0f0; border-radius: 3px; }
-    .budget-bar-fill { height: 6px; border-radius: 3px; background: #10b981; }
-
-    /* 메모 */
-    .memo-item {
-      padding: 9px 11px;
-      background: #fafafa;
-      border-radius: 8px;
-      margin-bottom: 7px;
-      border-left: 3px solid #e5e5e5;
-    }
-    .memo-item:last-child { margin-bottom: 0; }
-    .memo-text { font-size: 13px; }
-    .memo-meta { font-size: 11px; color: #aaa; margin-top: 4px; }
+    .budget-bar-fill { height: 6px; border-radius: 3px; background: #10b981; transition: width 0.4s; }
 
     /* 추가 버튼 */
     .add-btn {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 12px; color: #888;
-      background: none;
-      border: 1px dashed #ddd;
-      border-radius: 8px;
-      padding: 7px 10px; cursor: pointer;
-      width: 100%; justify-content: center;
-      margin-top: 10px;
-      transition: all 0.15s;
+      display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888;
+      background: none; border: 1px dashed #ddd; border-radius: 8px;
+      padding: 7px 10px; cursor: pointer; width: 100%; justify-content: center;
+      margin-top: 10px; transition: all 0.15s;
     }
     .add-btn:hover { background: #f5f5f5; color: #444; border-color: #aaa; }
+
+    /* 빈 상태 */
+    .empty { text-align: center; color: #bbb; font-size: 13px; padding: 16px 0; }
 
     /* 모바일 */
     @media (max-width: 600px) {
       body { padding: 1rem; }
       .grid-top { grid-template-columns: repeat(2, 1fr); }
       .grid-main { grid-template-columns: 1fr; }
-      .avatar { font-size: 11px; width: 36px; height: 36px; }
     }
   </style>
 </head>
 <body>
-  <div class="dashboard">
+<div class="dashboard">
 
-    <!-- 헤더 -->
-    <div class="header">
-      <div class="header-left">
-        <i class="ti ti-smart-home" style="font-size:22px; color:#888;"></i>
-        <div>
-          <div class="header-title">우리 가족 대시보드</div>
-          <div class="header-date" id="today-date"></div>
-        </div>
-      </div>
-      <div class="avatar-row">
-        <div class="avatar av-sungsoo">성수</div>
-        <div class="avatar av-heeyoung">희영</div>
-        <div class="avatar av-hajin">하진</div>
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-left">
+      <i class="ti ti-smart-home" style="font-size:22px; color:#888;"></i>
+      <div>
+        <div class="header-title">우리 가족 대시보드</div>
+        <div class="header-date" id="today-date"></div>
       </div>
     </div>
-
-    <!-- 상단 지표 -->
-    <div class="grid-top">
-      <div class="metric-card">
-        <div class="metric-label"><i class="ti ti-calendar-check" style="font-size:14px;"></i> 오늘 일정</div>
-        <div class="metric-value">3</div>
-        <div class="metric-sub">내일 2개 예정</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label"><i class="ti ti-checkbox" style="font-size:14px;"></i> 할 일</div>
-        <div class="metric-value">4</div>
-        <div class="metric-sub">1개 완료</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label"><i class="ti ti-wallet" style="font-size:14px;"></i> 이번 달 지출</div>
-        <div class="metric-value">68%</div>
-        <div class="metric-sub">340만 / 500만 원</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label"><i class="ti ti-notes" style="font-size:14px;"></i> 새 메모</div>
-        <div class="metric-value">2</div>
-        <div class="metric-sub">오늘 작성됨</div>
-      </div>
-    </div>
-
-    <!-- 메인 그리드 -->
-    <div class="grid-main">
-
-      <!-- 이번 주 일정 -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <i class="ti ti-calendar" style="font-size:16px; color:#3b82f6;"></i> 이번 주 일정
-          </div>
-        </div>
-        <div class="cal-item">
-          <div class="cal-dot dot-heeyoung"></div>
-          <div class="cal-info">
-            <div class="cal-name">학부모 상담</div>
-            <div class="cal-time">오늘 오후 3시</div>
-          </div>
-          <span class="tag tag-heeyoung">희영</span>
-        </div>
-        <div class="cal-item">
-          <div class="cal-dot dot-hajin"></div>
-          <div class="cal-info">
-            <div class="cal-name">피아노 레슨</div>
-            <div class="cal-time">오늘 오후 5시</div>
-          </div>
-          <span class="tag tag-hajin">하진</span>
-        </div>
-        <div class="cal-item">
-          <div class="cal-dot dot-sungsoo"></div>
-          <div class="cal-info">
-            <div class="cal-name">마트 장보기</div>
-            <div class="cal-time">수요일 오전 11시</div>
-          </div>
-          <span class="tag tag-sungsoo">성수</span>
-        </div>
-        <div class="cal-item">
-          <div class="cal-dot dot-hajin"></div>
-          <div class="cal-info">
-            <div class="cal-name">치과 예약</div>
-            <div class="cal-time">금요일 오후 2시</div>
-          </div>
-          <span class="tag tag-hajin">하진</span>
-        </div>
-        <button class="add-btn">
-          <i class="ti ti-plus" style="font-size:13px;"></i> 일정 추가 (준비 중)
-        </button>
-      </div>
-
-      <!-- 할 일 목록 -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <i class="ti ti-list-check" style="font-size:16px; color:#10b981;"></i> 할 일 목록
-          </div>
-        </div>
-        <div class="todo-item">
-          <div class="todo-check done"></div>
-          <span class="todo-text done">청소기 돌리기</span>
-          <span class="tag tag-heeyoung">희영</span>
-        </div>
-        <div class="todo-item">
-          <div class="todo-check" onclick="toggleTodo(this)"></div>
-          <span class="todo-text">마트 장보기</span>
-          <span class="tag tag-sungsoo">성수</span>
-        </div>
-        <div class="todo-item">
-          <div class="todo-check" onclick="toggleTodo(this)"></div>
-          <span class="todo-text">숙제 검사하기</span>
-          <span class="tag tag-heeyoung">희영</span>
-        </div>
-        <div class="todo-item">
-          <div class="todo-check" onclick="toggleTodo(this)"></div>
-          <span class="todo-text">독서 30분</span>
-          <span class="tag tag-hajin">하진</span>
-        </div>
-        <button class="add-btn">
-          <i class="ti ti-plus" style="font-size:13px;"></i> 할 일 추가 (준비 중)
-        </button>
-      </div>
-
-      <!-- 최근 지출 -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <i class="ti ti-coin" style="font-size:16px; color:#f59e0b;"></i> 최근 지출
-          </div>
-        </div>
-        <div class="expense-item">
-          <div class="expense-left">
-            <div class="expense-icon" style="background:#fef3c7;">🛒</div>
-            <div>
-              <div class="expense-name">마트</div>
-              <div class="expense-who">성수 · 오늘</div>
-            </div>
-          </div>
-          <div class="expense-amount">78,400원</div>
-        </div>
-        <div class="expense-item">
-          <div class="expense-left">
-            <div class="expense-icon" style="background:#d1fae5;">🎓</div>
-            <div>
-              <div class="expense-name">학원비</div>
-              <div class="expense-who">희영 · 어제</div>
-            </div>
-          </div>
-          <div class="expense-amount">280,000원</div>
-        </div>
-        <div class="expense-item">
-          <div class="expense-left">
-            <div class="expense-icon" style="background:#ffedd5;">🍽️</div>
-            <div>
-              <div class="expense-name">외식</div>
-              <div class="expense-who">가족 · 일요일</div>
-            </div>
-          </div>
-          <div class="expense-amount">65,000원</div>
-        </div>
-        <div class="budget-bar-wrap">
-          <div class="budget-label">
-            <span>이번 달 예산</span>
-            <span>340만 / 500만 원</span>
-          </div>
-          <div class="budget-bar-bg">
-            <div class="budget-bar-fill" style="width: 68%;"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 공지 / 메모 -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <i class="ti ti-notes" style="font-size:16px; color:#8b5cf6;"></i> 공지 / 메모
-          </div>
-        </div>
-        <div class="memo-item" style="border-left-color: #3b82f6;">
-          <div class="memo-text">🏖️ 여름 휴가 일정 — 7월 말로 논의 필요!</div>
-          <div class="memo-meta">성수 · 오늘</div>
-        </div>
-        <div class="memo-item" style="border-left-color: #10b981;">
-          <div class="memo-text">하진 알레르기 약 냉장고에 있어요. 아침마다 꼭 챙겨주세요.</div>
-          <div class="memo-meta">희영 · 오늘</div>
-        </div>
-        <div class="memo-item" style="border-left-color: #f97316;">
-          <div class="memo-text">이번 주 토요일 할머니댁 방문 예정</div>
-          <div class="memo-meta">희영 · 어제</div>
-        </div>
-        <button class="add-btn">
-          <i class="ti ti-plus" style="font-size:13px;"></i> 메모 추가 (준비 중)
-        </button>
-      </div>
-
+    <div class="avatar-row">
+      <div class="avatar av-sungsoo">성수</div>
+      <div class="avatar av-heeyoung">희영</div>
+      <div class="avatar av-hajin">하진</div>
     </div>
   </div>
 
-  <script>
-    const d = new Date();
-    const days = ['일', '월', '화', '수', '목', '금', '토'];
-    document.getElementById('today-date').textContent =
-      `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+  <!-- 상단 지표 -->
+  <div class="grid-top">
+    <div class="metric-card">
+      <div class="metric-label"><i class="ti ti-calendar-check" style="font-size:14px;"></i> 이번 주 일정</div>
+      <div class="metric-value" id="stat-cal">0</div>
+      <div class="metric-sub">개 등록됨</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label"><i class="ti ti-checkbox" style="font-size:14px;"></i> 할 일</div>
+      <div class="metric-value" id="stat-todo">0</div>
+      <div class="metric-sub" id="stat-todo-sub">개 남음</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label"><i class="ti ti-wallet" style="font-size:14px;"></i> 이번 달 지출</div>
+      <div class="metric-value" id="stat-expense">0원</div>
+      <div class="metric-sub" id="stat-expense-sub">예산 대비 0%</div>
+    </div>
+  </div>
 
-    function toggleTodo(el) {
-      el.classList.toggle('done');
-      const text = el.parentElement.querySelector('.todo-text');
-      text.classList.toggle('done');
-    }
-  </script>
+  <!-- 메인 그리드 -->
+  <div class="grid-main">
+
+    <!-- 이번 주 일정 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="ti ti-calendar" style="font-size:16px; color:#3b82f6;"></i> 이번 주 일정</div>
+      </div>
+      <!-- 입력 폼 -->
+      <div class="input-form" id="form-cal">
+        <div class="input-row">
+          <input type="text" id="cal-name" placeholder="일정 내용" style="flex:2;" />
+          <select id="cal-who">
+            <option value="sungsoo">성수</option>
+            <option value="heeyoung">희영</option>
+            <option value="hajin">하진</option>
+            <option value="family">가족</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <input type="date" id="cal-date" />
+          <input type="time" id="cal-time" />
+        </div>
+        <div class="input-row">
+          <button class="btn-cancel" onclick="closeForm('cal')">취소</button>
+          <button class="btn-submit" onclick="addCal()">추가</button>
+        </div>
+      </div>
+      <div id="cal-list"><div class="empty">등록된 일정이 없어요</div></div>
+      <button class="add-btn" onclick="openForm('cal')">
+        <i class="ti ti-plus" style="font-size:13px;"></i> 일정 추가
+      </button>
+    </div>
+
+    <!-- 할 일 목록 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="ti ti-list-check" style="font-size:16px; color:#10b981;"></i> 할 일 목록</div>
+      </div>
+      <!-- 입력 폼 -->
+      <div class="input-form" id="form-todo">
+        <div class="input-row">
+          <input type="text" id="todo-name" placeholder="할 일 내용" style="flex:2;" />
+          <select id="todo-who">
+            <option value="sungsoo">성수</option>
+            <option value="heeyoung">희영</option>
+            <option value="hajin">하진</option>
+            <option value="family">가족</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <button class="btn-cancel" onclick="closeForm('todo')">취소</button>
+          <button class="btn-submit" onclick="addTodo()">추가</button>
+        </div>
+      </div>
+      <div id="todo-list"><div class="empty">할 일이 없어요 🎉</div></div>
+      <button class="add-btn" onclick="openForm('todo')">
+        <i class="ti ti-plus" style="font-size:13px;"></i> 할 일 추가
+      </button>
+    </div>
+
+    <!-- 지출 내역 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="ti ti-coin" style="font-size:16px; color:#f59e0b;"></i> 지출 내역</div>
+      </div>
+      <!-- 입력 폼 -->
+      <div class="input-form" id="form-expense">
+        <div class="input-row">
+          <input type="text" id="exp-name" placeholder="내용 (예: 마트)" style="flex:2;" />
+          <select id="exp-who">
+            <option value="sungsoo">성수</option>
+            <option value="heeyoung">희영</option>
+            <option value="hajin">하진</option>
+            <option value="family">가족</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <input type="number" id="exp-amount" placeholder="금액 (원)" />
+          <select id="exp-category">
+            <option value="🛒">🛒 마트</option>
+            <option value="🍽️">🍽️ 외식</option>
+            <option value="🎓">🎓 교육</option>
+            <option value="🏥">🏥 의료</option>
+            <option value="🚗">🚗 교통</option>
+            <option value="🎁">🎁 기타</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <button class="btn-cancel" onclick="closeForm('expense')">취소</button>
+          <button class="btn-submit" onclick="addExpense()">추가</button>
+        </div>
+      </div>
+      <div id="expense-list"><div class="empty">등록된 지출이 없어요</div></div>
+      <!-- 예산 바 -->
+      <div class="budget-bar-wrap">
+        <div class="budget-label">
+          <span>이번 달 예산 500만원</span>
+          <span id="budget-text">0%</span>
+        </div>
+        <div class="budget-bar-bg">
+          <div class="budget-bar-fill" id="budget-bar" style="width:0%;"></div>
+        </div>
+      </div>
+      <button class="add-btn" onclick="openForm('expense')">
+        <i class="ti ti-plus" style="font-size:13px;"></i> 지출 추가
+      </button>
+    </div>
+
+    <!-- 공지 / 메모 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="ti ti-notes" style="font-size:16px; color:#8b5cf6;"></i> 공지 / 메모</div>
+      </div>
+      <!-- 입력 폼 -->
+      <div class="input-form" id="form-memo">
+        <div class="input-row">
+          <select id="memo-who">
+            <option value="sungsoo">성수</option>
+            <option value="heeyoung">희영</option>
+            <option value="hajin">하진</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <input type="text" id="memo-text" placeholder="메모 내용을 입력하세요" style="flex:1;" />
+        </div>
+        <div class="input-row">
+          <button class="btn-cancel" onclick="closeForm('memo')">취소</button>
+          <button class="btn-submit" onclick="addMemo()">추가</button>
+        </div>
+      </div>
+      <div id="memo-list"><div class="empty">등록된 메모가 없어요</div></div>
+      <button class="add-btn" onclick="openForm('memo')">
+        <i class="ti ti-plus" style="font-size:13px;"></i> 메모 추가
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 오늘 날짜
+  const d = new Date();
+  const days = ['일','월','화','수','목','금','토'];
+  document.getElementById('today-date').textContent =
+    `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+
+  // 날짜 기본값 오늘로
+  const todayStr = d.toISOString().split('T')[0];
+  document.getElementById('cal-date').value = todayStr;
+
+  // 데이터 저장소 (브라우저 메모리)
+  let calItems = [];
+  let todoItems = [];
+  let expenseItems = [];
+  let memoItems = [];
+  const BUDGET = 5000000;
+
+  // 이름/색상 매핑
+  const whoLabel = { sungsoo:'성수', heeyoung:'희영', hajin:'하진', family:'가족' };
+  const dotColor = { sungsoo:'dot-sungsoo', heeyoung:'dot-heeyoung', hajin:'dot-hajin', family:'dot-family' };
+  const tagColor = { sungsoo:'tag-sungsoo', heeyoung:'tag-heeyoung', hajin:'tag-hajin', family:'tag-family' };
+  const memoColor = { sungsoo:'#3b82f6', heeyoung:'#10b981', hajin:'#f97316' };
+
+  // 폼 열기/닫기
+  function openForm(type) {
+    document.getElementById('form-' + type).classList.add('open');
+  }
+  function closeForm(type) {
+    document.getElementById('form-' + type).classList.remove('open');
+  }
+
+  // ── 일정 ──
+  function addCal() {
+    const name = document.getElementById('cal-name').value.trim();
+    const who  = document.getElementById('cal-who').value;
+    const date = document.getElementById('cal-date').value;
+    const time = document.getElementById('cal-time').value;
+    if (!name) { alert('일정 내용을 입력해주세요'); return; }
+    calItems.push({ id: Date.now(), name, who, date, time });
+    calItems.sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+    document.getElementById('cal-name').value = '';
+    document.getElementById('cal-time').value = '';
+    closeForm('cal');
+    renderCal();
+    updateStats();
+  }
+  function renderCal() {
+    const list = document.getElementById('cal-list');
+    if (!calItems.length) { list.innerHTML = '<div class="empty">등록된 일정이 없어요</div>'; return; }
+    list.innerHTML = calItems.map(item => {
+      const dateObj = item.date ? new Date(item.date + 'T00:00:00') : null;
+      const dateStr = dateObj
+        ? `${dateObj.getMonth()+1}/${dateObj.getDate()}(${days[dateObj.getDay()]})`
+        : '';
+      const timeStr = item.time ? ' ' + item.time : '';
+      return `<div class="cal-item">
+        <div class="dot ${dotColor[item.who]}"></div>
+        <div class="cal-info">
+          <div class="cal-name">${item.name}</div>
+          <div class="cal-time">${dateStr}${timeStr}</div>
+        </div>
+        <span class="tag ${tagColor[item.who]}">${whoLabel[item.who]}</span>
+        <button class="btn-del" onclick="delCal(${item.id})">×</button>
+      </div>`;
+    }).join('');
+  }
+  function delCal(id) {
+    calItems = calItems.filter(i => i.id !== id);
+    renderCal(); updateStats();
+  }
+
+  // ── 할 일 ──
+  function addTodo() {
+    const name = document.getElementById('todo-name').value.trim();
+    const who  = document.getElementById('todo-who').value;
+    if (!name) { alert('할 일 내용을 입력해주세요'); return; }
+    todoItems.push({ id: Date.now(), name, who, done: false });
+    document.getElementById('todo-name').value = '';
+    closeForm('todo');
+    renderTodo();
+    updateStats();
+  }
+  function toggleTodo(id) {
+    const item = todoItems.find(i => i.id === id);
+    if (item) item.done = !item.done;
+    renderTodo(); updateStats();
+  }
+  function delTodo(id) {
+    todoItems = todoItems.filter(i => i.id !== id);
+    renderTodo(); updateStats();
+  }
+  function renderTodo() {
+    const list = document.getElementById('todo-list');
+    if (!todoItems.length) { list.innerHTML = '<div class="empty">할 일이 없어요 🎉</div>'; return; }
+    list.innerHTML = todoItems.map(item => `
+      <div class="todo-item">
+        <div class="todo-check ${item.done ? 'done' : ''}" onclick="toggleTodo(${item.id})"></div>
+        <span class="todo-text ${item.done ? 'done' : ''}">${item.name}</span>
+        <span class="tag ${tagColor[item.who]}">${whoLabel[item.who]}</span>
+        <button class="btn-del" onclick="delTodo(${item.id})">×</button>
+      </div>`).join('');
+  }
+
+  // ── 지출 ──
+  function addExpense() {
+    const name   = document.getElementById('exp-name').value.trim();
+    const who    = document.getElementById('exp-who').value;
+    const amount = parseInt(document.getElementById('exp-amount').value);
+    const cat    = document.getElementById('exp-category').value;
+    if (!name || !amount) { alert('내용과 금액을 입력해주세요'); return; }
+    expenseItems.push({ id: Date.now(), name, who, amount, cat });
+    document.getElementById('exp-name').value = '';
+    document.getElementById('exp-amount').value = '';
+    closeForm('expense');
+    renderExpense();
+    updateStats();
+  }
+  function delExpense(id) {
+    expenseItems = expenseItems.filter(i => i.id !== id);
+    renderExpense(); updateStats();
+  }
+  function renderExpense() {
+    const list = document.getElementById('expense-list');
+    if (!expenseItems.length) { list.innerHTML = '<div class="empty">등록된 지출이 없어요</div>'; return; }
+    const iconBg = { '🛒':'#fef3c7','🍽️':'#ffedd5','🎓':'#d1fae5','🏥':'#fee2e2','🚗':'#e0f2fe','🎁':'#f3e8ff' };
+    list.innerHTML = expenseItems.slice().reverse().map(item => `
+      <div class="expense-item">
+        <div class="expense-left">
+          <div class="expense-icon" style="background:${iconBg[item.cat]||'#f5f5f5'}">${item.cat}</div>
+          <div>
+            <div class="expense-name">${item.name}</div>
+            <div class="expense-who">${whoLabel[item.who]}</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="expense-amount">${item.amount.toLocaleString()}원</div>
+          <button class="btn-del" onclick="delExpense(${item.id})">×</button>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── 메모 ──
+  function addMemo() {
+    const text = document.getElementById('memo-text').value.trim();
+    const who  = document.getElementById('memo-who').value;
+    if (!text) { alert('메모 내용을 입력해주세요'); return; }
+    const now = new Date();
+    const timeLabel = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    memoItems.unshift({ id: Date.now(), text, who, time: timeLabel });
+    document.getElementById('memo-text').value = '';
+    closeForm('memo');
+    renderMemo();
+  }
+  function delMemo(id) {
+    memoItems = memoItems.filter(i => i.id !== id);
+    renderMemo();
+  }
+  function renderMemo() {
+    const list = document.getElementById('memo-list');
+    if (!memoItems.length) { list.innerHTML = '<div class="empty">등록된 메모가 없어요</div>'; return; }
+    list.innerHTML = memoItems.map(item => `
+      <div style="padding:9px 11px;background:#fafafa;border-radius:8px;margin-bottom:7px;border-left:3px solid ${memoColor[item.who]||'#ccc'};position:relative;">
+        <div style="font-size:13px;padding-right:18px;">${item.text}</div>
+        <div style="font-size:11px;color:#aaa;margin-top:4px;">${whoLabel[item.who]} · ${item.time}</div>
+        <button class="btn-del" style="position:absolute;top:8px;right:8px;" onclick="delMemo(${item.id})">×</button>
+      </div>`).join('');
+  }
+
+  // ── 통계 업데이트 ──
+  function updateStats() {
+    document.getElementById('stat-cal').textContent = calItems.length;
+    const remaining = todoItems.filter(i => !i.done).length;
+    document.getElementById('stat-todo').textContent = todoItems.length;
+    document.getElementById('stat-todo-sub').textContent =
+      `${remaining}개 남음 / ${todoItems.length - remaining}개 완료`;
+
+    const total = expenseItems.reduce((s, i) => s + i.amount, 0);
+    const pct = Math.min(Math.round(total / BUDGET * 100), 100);
+    document.getElementById('stat-expense').textContent = total.toLocaleString() + '원';
+    document.getElementById('stat-expense-sub').textContent = `예산 대비 ${pct}%`;
+    document.getElementById('budget-text').textContent = `${total.toLocaleString()}원 / 500만원 (${pct}%)`;
+    document.getElementById('budget-bar').style.width = pct + '%';
+    document.getElementById('budget-bar').style.background = pct > 90 ? '#f87171' : pct > 70 ? '#fbbf24' : '#10b981';
+  }
+</script>
 </body>
 </html>
