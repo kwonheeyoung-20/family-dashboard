@@ -28,18 +28,29 @@
     .header-left { display: flex; align-items: center; gap: 10px; }
     .header-title { font-size: 20px; font-weight: 600; }
     .header-date { font-size: 13px; color: #888; margin-top: 2px; }
-    .avatar-row { display: flex; gap: 6px; }
+    .avatar-row { display: flex; gap: 8px; }
     .avatar {
-      width: 36px; height: 36px; border-radius: 50%;
+      width: 42px; height: 42px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 600; cursor: default;
+      font-size: 12px; font-weight: 700; cursor: default;
+      letter-spacing: -0.3px;
     }
-    .av-blue   { background: #dbeafe; color: #1e40af; }
-    .av-teal   { background: #d1fae5; color: #065f46; }
-    .av-coral  { background: #fee2e2; color: #991b1b; }
-    .av-purple { background: #ede9fe; color: #5b21b6; }
 
-    /* 상단 지표 카드 */
+    /* 가족 색상 — 성수:파랑 / 희영:초록 / 하진:주황 */
+    .av-sungsoo  { background: #dbeafe; color: #1e40af; }
+    .av-heeyoung { background: #d1fae5; color: #065f46; }
+    .av-hajin    { background: #ffedd5; color: #9a3412; }
+
+    .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+    .tag-sungsoo  { background: #dbeafe; color: #1d4ed8; }
+    .tag-heeyoung { background: #d1fae5; color: #047857; }
+    .tag-hajin    { background: #ffedd5; color: #c2410c; }
+
+    .dot-sungsoo  { background: #3b82f6; }
+    .dot-heeyoung { background: #10b981; }
+    .dot-hajin    { background: #f97316; }
+
+    /* 상단 지표 */
     .grid-top {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -90,21 +101,9 @@
     }
     .cal-item:last-child { border-bottom: none; }
     .cal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot-blue   { background: #3b82f6; }
-    .dot-coral  { background: #ef4444; }
-    .dot-teal   { background: #10b981; }
-    .dot-purple { background: #8b5cf6; }
     .cal-info { flex: 1; }
     .cal-name { font-size: 13px; }
     .cal-time { font-size: 12px; color: #888; }
-    .tag {
-      font-size: 11px; padding: 2px 8px;
-      border-radius: 20px; font-weight: 500;
-    }
-    .tag-blue   { background: #dbeafe; color: #1d4ed8; }
-    .tag-coral  { background: #fee2e2; color: #b91c1c; }
-    .tag-teal   { background: #d1fae5; color: #047857; }
-    .tag-purple { background: #ede9fe; color: #6d28d9; }
 
     /* 할 일 */
     .todo-item {
@@ -148,7 +147,7 @@
       font-size: 12px; color: #888; margin-bottom: 6px;
     }
     .budget-bar-bg { height: 6px; background: #f0f0f0; border-radius: 3px; }
-    .budget-bar-fill { height: 6px; border-radius: 3px; background: #10b981; transition: width 0.5s; }
+    .budget-bar-fill { height: 6px; border-radius: 3px; background: #10b981; }
 
     /* 메모 */
     .memo-item {
@@ -176,12 +175,12 @@
     }
     .add-btn:hover { background: #f5f5f5; color: #444; border-color: #aaa; }
 
-    /* 모바일 대응 */
+    /* 모바일 */
     @media (max-width: 600px) {
       body { padding: 1rem; }
       .grid-top { grid-template-columns: repeat(2, 1fr); }
       .grid-main { grid-template-columns: 1fr; }
-      .avatar { font-size: 10px; width: 32px; height: 32px; }
+      .avatar { font-size: 11px; width: 36px; height: 36px; }
     }
   </style>
 </head>
@@ -198,10 +197,9 @@
         </div>
       </div>
       <div class="avatar-row">
-        <div class="avatar av-blue">아빠</div>
-        <div class="avatar av-teal">엄마</div>
-        <div class="avatar av-coral">첫째</div>
-        <div class="avatar av-purple">둘째</div>
+        <div class="avatar av-sungsoo">성수</div>
+        <div class="avatar av-heeyoung">희영</div>
+        <div class="avatar av-hajin">하진</div>
       </div>
     </div>
 
@@ -214,8 +212,8 @@
       </div>
       <div class="metric-card">
         <div class="metric-label"><i class="ti ti-checkbox" style="font-size:14px;"></i> 할 일</div>
-        <div class="metric-value">5</div>
-        <div class="metric-sub">2개 완료</div>
+        <div class="metric-value">4</div>
+        <div class="metric-sub">1개 완료</div>
       </div>
       <div class="metric-card">
         <div class="metric-label"><i class="ti ti-wallet" style="font-size:14px;"></i> 이번 달 지출</div>
@@ -240,36 +238,36 @@
           </div>
         </div>
         <div class="cal-item">
-          <div class="cal-dot dot-blue"></div>
+          <div class="cal-dot dot-heeyoung"></div>
           <div class="cal-info">
             <div class="cal-name">학부모 상담</div>
             <div class="cal-time">오늘 오후 3시</div>
           </div>
-          <span class="tag tag-teal">엄마</span>
+          <span class="tag tag-heeyoung">희영</span>
         </div>
         <div class="cal-item">
-          <div class="cal-dot dot-coral"></div>
+          <div class="cal-dot dot-hajin"></div>
           <div class="cal-info">
             <div class="cal-name">피아노 레슨</div>
             <div class="cal-time">오늘 오후 5시</div>
           </div>
-          <span class="tag tag-coral">첫째</span>
+          <span class="tag tag-hajin">하진</span>
         </div>
         <div class="cal-item">
-          <div class="cal-dot dot-teal"></div>
+          <div class="cal-dot dot-sungsoo"></div>
           <div class="cal-info">
             <div class="cal-name">마트 장보기</div>
             <div class="cal-time">수요일 오전 11시</div>
           </div>
-          <span class="tag tag-blue">아빠</span>
+          <span class="tag tag-sungsoo">성수</span>
         </div>
         <div class="cal-item">
-          <div class="cal-dot dot-purple"></div>
+          <div class="cal-dot dot-hajin"></div>
           <div class="cal-info">
             <div class="cal-name">치과 예약</div>
             <div class="cal-time">금요일 오후 2시</div>
           </div>
-          <span class="tag tag-purple">둘째</span>
+          <span class="tag tag-hajin">하진</span>
         </div>
         <button class="add-btn">
           <i class="ti ti-plus" style="font-size:13px;"></i> 일정 추가 (준비 중)
@@ -286,27 +284,22 @@
         <div class="todo-item">
           <div class="todo-check done"></div>
           <span class="todo-text done">청소기 돌리기</span>
-          <span class="tag tag-teal">엄마</span>
+          <span class="tag tag-heeyoung">희영</span>
         </div>
         <div class="todo-item">
-          <div class="todo-check done"></div>
-          <span class="todo-text done">우유 사오기</span>
-          <span class="tag tag-blue">아빠</span>
+          <div class="todo-check" onclick="toggleTodo(this)"></div>
+          <span class="todo-text">마트 장보기</span>
+          <span class="tag tag-sungsoo">성수</span>
         </div>
         <div class="todo-item">
           <div class="todo-check" onclick="toggleTodo(this)"></div>
           <span class="todo-text">숙제 검사하기</span>
-          <span class="tag tag-teal">엄마</span>
-        </div>
-        <div class="todo-item">
-          <div class="todo-check" onclick="toggleTodo(this)"></div>
-          <span class="todo-text">약 처방전 받기</span>
-          <span class="tag tag-blue">아빠</span>
+          <span class="tag tag-heeyoung">희영</span>
         </div>
         <div class="todo-item">
           <div class="todo-check" onclick="toggleTodo(this)"></div>
           <span class="todo-text">독서 30분</span>
-          <span class="tag tag-coral">첫째</span>
+          <span class="tag tag-hajin">하진</span>
         </div>
         <button class="add-btn">
           <i class="ti ti-plus" style="font-size:13px;"></i> 할 일 추가 (준비 중)
@@ -325,7 +318,7 @@
             <div class="expense-icon" style="background:#fef3c7;">🛒</div>
             <div>
               <div class="expense-name">마트</div>
-              <div class="expense-who">아빠 · 오늘</div>
+              <div class="expense-who">성수 · 오늘</div>
             </div>
           </div>
           <div class="expense-amount">78,400원</div>
@@ -335,14 +328,14 @@
             <div class="expense-icon" style="background:#d1fae5;">🎓</div>
             <div>
               <div class="expense-name">학원비</div>
-              <div class="expense-who">엄마 · 어제</div>
+              <div class="expense-who">희영 · 어제</div>
             </div>
           </div>
           <div class="expense-amount">280,000원</div>
         </div>
         <div class="expense-item">
           <div class="expense-left">
-            <div class="expense-icon" style="background:#ede9fe;">🍽️</div>
+            <div class="expense-icon" style="background:#ffedd5;">🍽️</div>
             <div>
               <div class="expense-name">외식</div>
               <div class="expense-who">가족 · 일요일</div>
@@ -370,15 +363,15 @@
         </div>
         <div class="memo-item" style="border-left-color: #3b82f6;">
           <div class="memo-text">🏖️ 여름 휴가 일정 — 7월 말로 논의 필요!</div>
-          <div class="memo-meta">아빠 · 오늘</div>
+          <div class="memo-meta">성수 · 오늘</div>
         </div>
         <div class="memo-item" style="border-left-color: #10b981;">
-          <div class="memo-text">첫째 알레르기 약 냉장고에 있어요. 아침마다 꼭 챙겨주세요.</div>
-          <div class="memo-meta">엄마 · 오늘</div>
+          <div class="memo-text">하진 알레르기 약 냉장고에 있어요. 아침마다 꼭 챙겨주세요.</div>
+          <div class="memo-meta">희영 · 오늘</div>
         </div>
-        <div class="memo-item" style="border-left-color: #8b5cf6;">
+        <div class="memo-item" style="border-left-color: #f97316;">
           <div class="memo-text">이번 주 토요일 할머니댁 방문 예정</div>
-          <div class="memo-meta">엄마 · 어제</div>
+          <div class="memo-meta">희영 · 어제</div>
         </div>
         <button class="add-btn">
           <i class="ti ti-plus" style="font-size:13px;"></i> 메모 추가 (준비 중)
@@ -389,13 +382,11 @@
   </div>
 
   <script>
-    // 오늘 날짜 표시
     const d = new Date();
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     document.getElementById('today-date').textContent =
       `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
 
-    // 할 일 체크 토글
     function toggleTodo(el) {
       el.classList.toggle('done');
       const text = el.parentElement.querySelector('.todo-text');
